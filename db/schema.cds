@@ -11,7 +11,7 @@ entity Business_Partner: cuid, managed {
      name: String(20) @mandatory;
      @title: 'Address1'  
      address1:String(40)  @mandatory;
-     @title: 'Adress2'
+     @title: 'Address2'
      address2:String(30)   @mandatory;
      @title:'City'
      city:String(40)   @mandatory;
@@ -55,7 +55,7 @@ entity Store : cuid, managed {
     pin_code: String(20)    @mandatory;
 }
 
-/*entity Product : cuid, managed {
+entity Product : cuid, managed {
     @title: 'Product ID'
     product_ID: String(20) @mandatory;
     @title: 'Product Name'
@@ -63,7 +63,7 @@ entity Store : cuid, managed {
     @title: 'Product Image URL'
     product_img: String(20) @mandatory;
     @title: 'Product Cost Price'
-    product_cost: String(20) @mandatory;
+    product_cost: Decimal(14, 2) @currencyCode: 'INR' @mandatory;
     @title: 'Product Sell Price'
-    product_sell: String(20) @mandatory;
-}*/
+    product_sell: Decimal(14, 2) @currencyCode: 'INR' @mandatory;
+}

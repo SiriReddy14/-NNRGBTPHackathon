@@ -3,15 +3,29 @@ using { com.satinfotech.electronics as db} from '../db/schema';
 service ElectronicsDB {
     entity Business_Partner as projection on db.Business_Partner;
     entity State as projection on db.State;
+    entity Store as projection on db.Store;
+    entity Product as projection on db.Product;
 }
 
+
 annotate ElectronicsDB.Business_Partner with @odata.draft.enabled;
+annotate ElectronicsDB.Store with @odata.draft.enabled;
+annotate ElectronicsDB.Product with @odata.draft.enabled;
 
 annotate ElectronicsDB.Business_Partner with {
     pin_code     @assert.format: '^\d{6}$';
     gstinregx    @assert.format: '^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}[0-9]{1}$/';
 
 
+}
+
+annotate ElectronicsDB.Store with {
+    pin_code     @assert.format: '^\d{6}$';
+}
+
+annotate ElectronicsDB.Product with { 
+    product_img @validate.URL;
+    product_cost @assert: 'product_cost <= product_sell';
 }
 
 annotate ElectronicsDB.State with @(
@@ -143,4 +157,177 @@ annotate ElectronicsDB.Business_Partner with {
             ]
         }
     )
+};
+
+
+//annotations for Store
+annotate ElectronicsDB.Store with @(
+    UI.LineItem: [
+        {
+            $Type : 'UI.DataField',
+            Value : store_ID
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : name
+        }, 
+        {
+            $Type : 'UI.DataField',
+            Value : address1
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : address2
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : city
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : store_state
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : pin_code
+        }, 
+    ],
+    UI.SelectionFields: [ store_ID ],       
+
+    UI.FieldGroup #Store : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : store_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : name,
+            },            
+            {
+                $Type : 'UI.DataField',
+                Value : address1,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : address2,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : city,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : store_state,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : pin_code,
+            }, 
+                        
+        ],
+    },
+
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'StoreInfoFacet',
+            Label : 'Store  Information',
+            Target : '@UI.FieldGroup#Store',
+        },
+    ],    
+);
+
+annotate ElectronicsDB.Store with {
+    store_state @(     
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'States',
+            CollectionPath : 'State',
+            Parameters     : [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : store_state,
+                    ValueListProperty : 'code'
+                },
+             
+                {
+
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'description'
+                }
+            ]
+        }
+    );
+};
+
+//annotations for product
+annotate ElectronicsDB.Product with @(
+    UI.LineItem: [
+        {
+            $Type : 'UI.DataField',
+            Value : product_ID
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : product_name
+        }, 
+        {
+            $Type : 'UI.DataField',
+            Value : product_img
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : product_cost
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : product_sell
+        }, 
+    ],
+    UI.SelectionFields: [ product_ID ],       
+
+    UI.FieldGroup #Product : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : product_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : product_name,
+            },            
+            {
+                $Type : 'UI.DataField',
+                Value : product_img,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : product_cost,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : product_sell,
+            },
+                        
+        ],
+    },
+
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'ProductInfoFacet',
+            Label : 'Product  Information',
+            Target : '@UI.FieldGroup#Product',
+        },
+    ],    
+);
+
+annotate ElectronicsDB.Product with {
+    @Common.Text: '{Product}'
+    @Core.IsURL: true
+    @Core.MediaType: 'image/jpg'
+    ProductPictureURL;
 };
