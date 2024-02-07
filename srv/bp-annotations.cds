@@ -56,7 +56,16 @@ annotate ElectronicsDB.Business_Partner with @(
         {
             $Type : 'UI.DataField',
             Value : pin_code
-        }, 
+        },
+        {
+            Value: is_gstn_registered
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : gstinregx
+        },
+    
+         
     ],
     UI.SelectionFields: [ bpn ],       
 
@@ -90,6 +99,14 @@ annotate ElectronicsDB.Business_Partner with @(
             {
                 $Type : 'UI.DataField',
                 Value : pin_code,
+            }, 
+            {
+                $Type : 'UI.DataField',
+                Value : is_gstn_registered,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : gstinregx,
             }, 
                         
         ],

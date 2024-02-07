@@ -96,7 +96,7 @@ annotate StoreDB.Store with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'BPInfoFacet',
-            Label : 'BP Information',
+            Label : 'Store  Information',
             Target : '@UI.FieldGroup#Store',
         },
     ],    
