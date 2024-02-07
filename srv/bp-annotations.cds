@@ -5,12 +5,14 @@ service ElectronicsDB {
     entity State as projection on db.State;
     entity Store as projection on db.Store;
     entity Product as projection on db.Product;
+    entity Stock as projection on db.Product;
 }
 
 
 annotate ElectronicsDB.Business_Partner with @odata.draft.enabled;
 annotate ElectronicsDB.Store with @odata.draft.enabled;
 annotate ElectronicsDB.Product with @odata.draft.enabled;
+annotate ElectronicsDB.Stock with @odata.draft.enabled;
 
 annotate ElectronicsDB.Business_Partner with {
     pin_code     @assert.format: '^\d{6}$';
@@ -325,9 +327,98 @@ annotate ElectronicsDB.Product with @(
     ],    
 );
 
-annotate ElectronicsDB.Product with {
+/*annotate ElectronicsDB.Product with {
     @Common.Text: '{Product}'
     @Core.IsURL: true
     @Core.MediaType: 'image/jpg'
-    ProductPictureURL;
+}*/
+
+//annotations for stock
+annotate ElectronicsDB.Stock with @(
+    UI.LineItem: [
+        {
+            $Type : 'UI.DataField',
+            Value : store_id
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : product_ID
+        }, 
+        {
+            $Type : 'UI.DataField',
+            Value : stock_qty
+        },
+    ],
+    UI.SelectionFields: [ store_id, product_ID ],       
+
+    UI.FieldGroup #Stock : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : store_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : product_ID,
+            },            
+            {
+                $Type : 'UI.DataField',
+                Value : stck_qty,
+            },        
+        ],
+    },
+
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'StockInfoFacet',
+            Label : 'Stock  Information',
+            Target : '@UI.FieldGroup#Stock',
+        },
+    ],    
+);
+
+annotate ElectronicsDB.Stock with {
+    store_ID @(     
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'Store',
+            CollectionPath : 'Store',
+            Parameters     : [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : store_ID,
+                    ValueListProperty : 'store_ID'
+                },
+             
+                {
+
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'name'
+                }
+            ]
+        }
+    );
+
+    product_ID @(     
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'Product',
+            CollectionPath : 'Product',
+            Parameters     : [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : product_ID,
+                    ValueListProperty : 'product_ID'
+                },
+             
+                {
+
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'product_name'
+                }
+            ]
+        }
+    )
 };

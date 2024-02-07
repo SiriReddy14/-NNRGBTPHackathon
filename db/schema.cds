@@ -67,3 +67,15 @@ entity Product : cuid, managed {
     @title: 'Product Sell Price'
     product_sell: Decimal(14, 2) @currencyCode: 'INR' @mandatory;
 }
+
+entity Stock : cuid, managed {
+    @title: 'Store_ID'
+    store_id: Association to Store  @mandatory;
+    @title: 'Product ID'
+    product_id: Association to Product  @mandatory;
+    @title: 'Stock quantity'
+    stock_qty: String(20) @mandatory;
+
+}
+
+

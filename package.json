@@ -14,11 +14,16 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/ux-specification": "^1.120.3"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-stock": "cds watch --open stock/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "main": "index.js",
-  "author": ""
+  "author": "",
+  "sapux": [
+    "app/stock"
+  ]
 }
