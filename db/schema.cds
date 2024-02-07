@@ -19,6 +19,10 @@ entity Business_Partner: cuid, managed {
      state:String(50)  @mandatory;
      @title: 'PIN Code'
      pin_code: String(20)    @mandatory;
+     @title: 'Is_gstn_registered'
+     is_gstn_registered: Boolean default false;
+     @title: 'GSTIN Number'
+     gstinregx: String(30)    @mandatory;
      //@title: 'Is Vendor'
      //is_vendor: Boolean default false;
      //@title: 'Is Customer

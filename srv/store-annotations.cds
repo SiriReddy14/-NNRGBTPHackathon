@@ -2,10 +2,28 @@ using { com.satinfotech.electronics as db} from '../db/schema';
 
 service StoreDB {
     entity Store as projection on db.Store;
+     entity State as projection on db.State;
+
 }
 
 annotate StoreDB.Store with @odata.draft.enabled;
 
+annotate StoreDB.Store with {
+    pin_code     @assert.format: '^\d{6}$';
+}
+
+annotate StoreDB.State with @(
+    UI.LineItem: [
+       {
+            $Type : 'UI.DataField',
+            Value : code
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : description
+        },  
+    ],
+);
 annotate StoreDB.Store with @(
     UI.LineItem: [
         {

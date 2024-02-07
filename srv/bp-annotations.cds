@@ -6,10 +6,11 @@ service ElectronicsDB {
 }
 
 annotate ElectronicsDB.Business_Partner with @odata.draft.enabled;
-annotate ElectronicsDB.Store with @odata.draft.enabled;
 
 annotate ElectronicsDB.Business_Partner with {
     pin_code     @assert.format: '^\d{6}$';
+    gstinregx    @assert.format: '^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}[0-9]{1}$/';
+
 
 }
 
@@ -124,5 +125,5 @@ annotate ElectronicsDB.Business_Partner with {
                 }
             ]
         }
-    );
+    )
 };

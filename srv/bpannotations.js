@@ -1,7 +1,7 @@
 const cds = require('@sap/cds');
-module.exports = cds.service.impl(function () {
+module.exports = cds.Business_Partner.impl(function () {
 
-    const { Business_Partner, State } = this.entities();
+    const { State } = this.entities();
     
     this.on(['READ'], State, async(req) => {
         states = [
