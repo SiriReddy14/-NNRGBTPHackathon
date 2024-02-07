@@ -16,7 +16,7 @@ entity Business_Partner: cuid, managed {
      @title:'City'
      city:String(40)   @mandatory;
      @title: 'State'
-     state:String(40)  @mandatory;
+     state:String(50)  @mandatory;
      @title: 'PIN Code'
      pin_code: String(20)    @mandatory;
      //@title: 'Is Vendor'
@@ -26,12 +26,12 @@ entity Business_Partner: cuid, managed {
 
 }
 
-//@cds.persistence.skip
+@cds.persistence.skip
 entity State{ 
      @title: 'code'
      key code:String(10);
      @title: 'description'  
-     description:      String(40);
+     description:String(40);
 }
 
 entity Store : cuid, managed {
@@ -46,7 +46,7 @@ entity Store : cuid, managed {
     @title:'City'
     city:String(40)   @mandatory;
     @title: 'State'
-    state:String(30)  @mandatory;
+    store_state:String(30)  @mandatory;
     @title: 'PIN Code.'
     pin_code: String(20)    @mandatory;
 }

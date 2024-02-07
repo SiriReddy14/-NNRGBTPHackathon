@@ -1,41 +1,21 @@
 using { com.satinfotech.electronics as db} from '../db/schema';
 
-service ElectronicsDB {
-    entity Business_Partner as projection on db.Business_Partner;
-    entity State as projection on db.State;
+service StoreDB {
+    entity Store as projection on db.Store;
 }
 
-annotate ElectronicsDB.Business_Partner with @odata.draft.enabled;
-annotate ElectronicsDB.Store with @odata.draft.enabled;
+annotate StoreDB.Store with @odata.draft.enabled;
 
-annotate ElectronicsDB.Business_Partner with {
-    pin_code     @assert.format: '^\d{6}$';
-
-}
-
-annotate ElectronicsDB.State with @(
+annotate StoreDB.Store with @(
     UI.LineItem: [
-       {
+        {
             $Type : 'UI.DataField',
-            Value : code
+            Value : store_ID
         },
-        {
-            $Type : 'UI.DataField',
-            Value : description
-        },  
-    ],
-);
-
-annotate ElectronicsDB.Business_Partner with @(
-    UI.LineItem: [
-        {
-            $Type : 'UI.DataField',
-            Value : bpn
-        },     
         {
             $Type : 'UI.DataField',
             Value : name
-        },
+        }, 
         {
             $Type : 'UI.DataField',
             Value : address1
@@ -50,21 +30,21 @@ annotate ElectronicsDB.Business_Partner with @(
         },
         {
             $Type : 'UI.DataField',
-            Value : state
+            Value : store_state
         },
         {
             $Type : 'UI.DataField',
             Value : pin_code
         }, 
     ],
-    UI.SelectionFields: [ bpn ],       
+    UI.SelectionFields: [ store_ID ],       
 
-    UI.FieldGroup #BPN : {
+    UI.FieldGroup #Store : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
                 $Type : 'UI.DataField',
-                Value : bpn,
+                Value : store_ID,
             },
             {
                 $Type : 'UI.DataField',
@@ -84,7 +64,7 @@ annotate ElectronicsDB.Business_Partner with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : state,
+                Value : store_state,
             },
             {
                 $Type : 'UI.DataField',
@@ -99,12 +79,12 @@ annotate ElectronicsDB.Business_Partner with @(
             $Type : 'UI.ReferenceFacet',
             ID : 'BPInfoFacet',
             Label : 'BP Information',
-            Target : '@UI.FieldGroup#BPN',
+            Target : '@UI.FieldGroup#Store',
         },
     ],    
 );
 
-annotate ElectronicsDB.Business_Partner with {
+/*annotate StoreDB.Store with {
     state @(     
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
@@ -125,4 +105,4 @@ annotate ElectronicsDB.Business_Partner with {
             ]
         }
     );
-};
+};*/

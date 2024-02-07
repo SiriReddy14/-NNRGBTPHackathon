@@ -2,6 +2,7 @@ const cds = require('@sap/cds');
 module.exports = cds.service.impl(function () {
 
     const { Business_Partner, State } = this.entities();
+    
     this.on(['READ'], State, async(req) => {
         states = [
             {"code":"AP", "description":"Andhra Pradesh"},
@@ -31,7 +32,7 @@ module.exports = cds.service.impl(function () {
             {"code":"TR", "description":"Tripura"},
             {"code":"UK", "description":"Uttarakhand"},
             {"code":"UP", "description":"Uttar Pradesh"},
-            {"code":"WB", "description":"West Bengal"},
+            {"code":"WB", "description":"West Bengal"}
         ]
           states.$count=states.length;
           return states;
