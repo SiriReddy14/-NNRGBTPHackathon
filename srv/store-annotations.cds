@@ -102,8 +102,8 @@ annotate StoreDB.Store with @(
     ],    
 );
 
-/*annotate StoreDB.Store with {
-    state @(     
+annotate StoreDB.Store with {
+    store_state @(     
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'States',
@@ -111,7 +111,7 @@ annotate StoreDB.Store with @(
             Parameters     : [
                 {
                     $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : state,
+                    LocalDataProperty : store_state,
                     ValueListProperty : 'code'
                 },
              
@@ -123,4 +123,4 @@ annotate StoreDB.Store with @(
             ]
         }
     );
-};*/
+};
